@@ -3,13 +3,7 @@ name = "keysymdefs"
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-keywords = [
-  "keysym",
-  "key name",
-  "key code",
-  "key symbol definition",
-  "keysymdefs",
-]
+keywords = ["keysym", "keysymdefs", "x11", "xorg"]
 categories = ["data-structures", "parsing", "os", "multimedia"]
 description = "A collection of key symbol definitions."
 repository = "https://github.com/milchinskiy/keysymdefs.git"

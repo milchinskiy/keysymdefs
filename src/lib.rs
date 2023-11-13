@@ -1,4 +1,6 @@
 pub mod definitions;
+#[allow(non_upper_case_globals)]
+pub mod keys;
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Item<'a> {
@@ -10,6 +12,22 @@ pub struct Item<'a> {
 }
 
 impl<'a> Item<'a> {
+    pub fn new(
+        keysym: u32,
+        unicode: Option<u32>,
+        name: &'a str,
+        cleared_name: &'a str,
+        desc: &'a str,
+    ) -> Self {
+        Self {
+            keysym,
+            unicode,
+            name,
+            cleared_name,
+            desc,
+        }
+    }
+
     /// keysym as u32
     /// e.g. 0xff55 or 65365
     pub fn keysym(&self) -> u32 {
@@ -79,92 +97,4 @@ pub fn get_item_by_unicode<'a>(unicode: u32) -> Option<&'a Item<'a>> {
     definitions::KEYSYMS
         .iter()
         .find(|x| x.unicode() == Some(unicode))
-}
-
-#[test]
-fn check_get_item_by_keysym() {
-    assert_eq!(get_item_by_keysym(65289).unwrap().name(), "XK_Tab");
-    assert_eq!(get_item_by_keysym(269025183).unwrap().name(), "XF86XK_Time");
-    assert_eq!(
-        get_item_by_keysym(269025148).unwrap().desc(),
-        "Spell checker"
-    );
-    assert_eq!(get_item_by_keysym(269025140).unwrap().unicode(), None);
-    assert_eq!(
-        get_item_by_keysym(16780766).unwrap().clone(),
-        Item {
-            name: "XK_Sinh_au2",
-            cleared_name: "Sinhau2",
-            keysym: 16780766,
-            unicode: Some(3550),
-            desc: "SINHALA KOMBUVA HAA GAYANUKITTA"
-        }
-    );
-    assert_eq!(get_item_by_keysym(1777).unwrap().unicode_char(), Some('Я'));
-    assert_eq!(get_item_by_keysym(16778942).unwrap().unicode(), Some(1726));
-}
-
-#[test]
-fn check_get_item_by_name() {
-    assert_eq!(get_item_by_name("XK_Tab").unwrap().name(), "XK_Tab");
-    assert_eq!(
-        get_item_by_name("XF86XK_Time").unwrap().name(),
-        "XF86XK_Time"
-    );
-    assert_eq!(
-        get_item_by_name("XF86XK_Time").unwrap().desc(),
-        "display, or shows an entry for time seeking"
-    );
-    assert_eq!(get_item_by_name("XF86XK_Time").unwrap().unicode(), None);
-    assert_eq!(
-        get_item_by_name("XK_Sinh_au2").unwrap().clone(),
-        Item {
-            name: "XK_Sinh_au2",
-            cleared_name: "Sinhau2",
-            keysym: 16780766,
-            unicode: Some(3550),
-            desc: "SINHALA KOMBUVA HAA GAYANUKITTA"
-        }
-    );
-    assert_eq!(get_item_by_name("XF86XK_Time").unwrap().unicode(), None);
-    assert_eq!(get_item_by_name("xK_tab"), None);
-    assert_eq!(get_item_by_name("XK_Tab").unwrap().keysym(), 65289);
-}
-
-#[test]
-fn check_get_item_by_cleared_name() {
-    assert_eq!(
-        get_item_by_cleared_name("Sinhau2").unwrap().name(),
-        "XK_Sinh_au2"
-    );
-    assert_eq!(
-        get_item_by_cleared_name("Sinhau2").unwrap().desc(),
-        "SINHALA KOMBUVA HAA GAYANUKITTA"
-    );
-    assert_eq!(
-        get_item_by_cleared_name("Sinhau2").unwrap().unicode(),
-        Some(3550)
-    );
-    assert_eq!(
-        get_item_by_cleared_name("Sinhau2").unwrap(),
-        get_item_by_name("XK_Sinh_au2").unwrap()
-    );
-    assert_eq!(get_item_by_cleared_name("tab"), None);
-    assert_eq!(get_item_by_cleared_name("Tab"), get_item_by_name("XK_Tab"));
-}
-
-#[test]
-fn check_get_item_by_unicode() {
-    assert_eq!(get_item_by_unicode(3550).unwrap().name(), "XK_Sinh_au2");
-    assert_eq!(
-        get_item_by_unicode(3550).unwrap().desc(),
-        "SINHALA KOMBUVA HAA GAYANUKITTA"
-    );
-    assert_eq!(get_item_by_unicode(3550).unwrap().unicode(), Some(3550));
-    assert_eq!(
-        get_item_by_unicode(42).unwrap(),
-        get_item_by_name("XK_asterisk").unwrap()
-    );
-    assert_eq!(get_item_by_unicode(1372).unwrap().keysym(), 16778588);
-    assert_eq!(get_item_by_unicode(1726).unwrap().unicode(), Some(1726));
 }

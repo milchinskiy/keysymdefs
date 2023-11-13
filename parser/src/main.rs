@@ -56,8 +56,35 @@ fn main() {
         }
 
         println!(
-            "Item {{ name: {:?}, cleared_name: {:?}, keysym: {}, unicode: {:?}, desc: {:?} }},",
-            name, cleared_name, keysym, unicode, desc
+            "Item {{ name: {:?}, cleared_name: {:?}, keysym: keys::{}, unicode: {:?}, desc: {:?} }},",
+            name, cleared_name, name, unicode, desc
         );
+
+        // let mut comment = String::new();
+        // let mut code = String::new();
+        // code = format!(
+        //     "pub const {} = {:#04x};",
+        //     format!("{:<40}", format!("{:<30}: u32", name)),
+        //     keysym
+        // );
+        //
+        // if unicode.is_some() {
+        //     comment = format!(
+        //         "/// U+{:04x} {:?}",
+        //         unicode.unwrap(),
+        //         char::from_u32(unicode.unwrap()).unwrap_or('?'),
+        //     );
+        // }
+        //
+        // if !desc.is_empty() {
+        //     if unicode.is_some() {
+        //         comment = format!("{} {}\n{}", comment, desc, code);
+        //     } else {
+        //         comment = format!("/// {}\n{}", desc, code);
+        //     }
+        //     println!("{comment}\n");
+        // } else {
+        //     println!("{code}\n")
+        // }
     }
 }

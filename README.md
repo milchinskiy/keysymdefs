@@ -1,5 +1,7 @@
 # Keysymdefs
 
+[![Rust](https://github.com/milchinskiy/keysymdefs/actions/workflows/rust.yml/badge.svg)](https://github.com/milchinskiy/keysymdefs/actions/workflows/rust.yml)
+
 This crate provides a mapping from the keysym code to a string representation
 of the keysym and vice versa.
 
